@@ -2,6 +2,7 @@ package com.vinay.guessthemovie;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,19 +26,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText editText;
     Button button;
     LinearLayout keyboard;
+
+    int screenWidth,screenHeight;
+    DisplayMetrics metrics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Initialize();
+        CreateHolder();
+        CreateKeyBoard();
+
+
+    }
+
+    private void Initialize() {
         num_col=6;
         five=5;
         finish=0;
 
-        //Random random = new Random();
+        metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        screenWidth = metrics.widthPixels;
+        screenHeight = metrics.heightPixels;
+
         moviename = db[(int)(Math.random()*db.length)];
 
         hint = (TextView)findViewById(R.id.hint);
         hint.setText("");
+
+    }
+
+    private void CreateHolder() {
         ll_holder= (LinearLayout) findViewById(R.id.Ll_holder);
         holder_row = new LinearLayout[(moviename.length()/num_col)+1];
         iv_holder = new Button[moviename.length()];
@@ -62,12 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 holder_row[i].addView(iv_holder[i*num_col+j]);
             }
         }
-
-        //iv_holder[5].setText("k");
-
-        CreateKeyBoard();
-
-
     }
 
     private void CreateKeyBoard() {
@@ -136,9 +151,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
-
-
 
 }
 
