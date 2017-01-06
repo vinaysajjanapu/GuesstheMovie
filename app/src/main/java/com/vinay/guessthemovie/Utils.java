@@ -2,6 +2,8 @@ package com.vinay.guessthemovie;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -14,8 +16,14 @@ public class Utils {
         new AlertDialog.Builder(activity).setMessage((CharSequence) message).setPositiveButton((CharSequence) "Ok", null).create().show();
     }
 
-    public static void internetAlert(Activity activity) {
-        new AlertDialog.Builder(activity).setMessage((CharSequence) "Please check internet connection.").setPositiveButton((CharSequence) "Ok", null).create().show();
+    public static void internetAlert(final Activity activity) {
+        new AlertDialog.Builder(activity).setMessage((CharSequence) "Please check internet connection.")
+                .setPositiveButton((CharSequence) "Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        activity.startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                    }
+                }).create().show();
     }
 
     public static boolean isOnline(Context context) {

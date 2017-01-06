@@ -55,6 +55,7 @@ public class OptionsActivity extends AppCompatActivity {
 
                     if (Utils.isOnline(getApplicationContext())) {
                         submitdatatoserver();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } else {
@@ -73,7 +74,8 @@ public class OptionsActivity extends AppCompatActivity {
 
         RequestQueue que=Volley.newRequestQueue(OptionsActivity.this);
 
-        StringRequest s=new StringRequest(Request.Method.POST, "http://whencutwini.16mb.com/GuessTheMovie/getMovies.php", new Response.Listener<String>() {
+        StringRequest s=new StringRequest(Request.Method.POST, "http://whencutwini.16mb.com/GuessTheMovie/getMovies.php",
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
