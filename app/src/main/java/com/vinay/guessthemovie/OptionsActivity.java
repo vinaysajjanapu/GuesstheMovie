@@ -27,7 +27,7 @@ import java.util.Map;
 public class OptionsActivity extends AppCompatActivity {
 
     DBHelper db;
-    Button btn_start,btn_submit;
+    Button btn_start;
     ProgressDialog pd;
 
     SharedPreferences score;
@@ -46,30 +46,22 @@ public class OptionsActivity extends AppCompatActivity {
         db=new DBHelper(this);
 
         btn_start= (Button) findViewById(R.id.btn_start);
-        btn_submit= (Button) findViewById(R.id.btn_sync);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if(db.getAllMovieDetails().size()>0){
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));}
-                else Utils.showAlert(OptionsActivity.this,"Please Sync Db to Continue");
-            }
-        });
+                if (db.getAllMovieDetails().size() > 0) {
 
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                    if (Utils.isOnline(getApplicationContext())) {
+                        submitdatatoserver();
+                    } else startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                if(Utils.isOnline(getApplicationContext()))
-                {
-                    submitdatatoserver();
+                } else {
+                    Utils.internetAlert(OptionsActivity.this);
                 }
-                else Utils.internetAlert(OptionsActivity.this);
-            }
-        });
-    }
+            }});
+        }
 
     private void submitdatatoserver() {
 
