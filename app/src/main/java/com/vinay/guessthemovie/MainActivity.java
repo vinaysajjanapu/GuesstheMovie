@@ -1,5 +1,6 @@
 package com.vinay.guessthemovie;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void Initialize() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getSupportActionBar().hide();
         num_col=6;
         five=5;
         finish=0;
@@ -90,13 +93,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 {"0","1","2","3","4","5","6","7","8","9"},
                 {"Q","W","E","R","T","Y","U","I","O","P"},
                 {"A","S","D","F","G","H","J","K","L","-"},
-                {"","Z","X","C","C","V","B","N","M",""},
+                {"","Z","X","C","V","B","N","M","",""},
         };
         keyboard = (LinearLayout)findViewById(R.id.keyboard);
         LinearLayout[] r = new LinearLayout[4];
         Button[] k = new Button[40];
-        int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics());
-        LinearLayout.LayoutParams lp3 = new LinearLayout.LayoutParams(width1, ViewGroup.LayoutParams.WRAP_CONTENT);
+       // int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics());
+        LinearLayout.LayoutParams lp3 = new LinearLayout.LayoutParams(screenWidth/10, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp3.setMargins(0,0,0,0);
 
         for(int ind1=0; ind1<4;ind1++){
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             keyboard.addView(r[ind1]);
             for (int ind2=0;ind2<str[ind1].length;ind2++){
                 k[ind1*10+ind2] = new Button(this);
-                k[ind1*10+ind2].setTextSize(TypedValue.COMPLEX_UNIT_DIP,10);
+                k[ind1*10+ind2].setTextSize(TypedValue.COMPLEX_UNIT_DIP,screenWidth/40);
                 k[ind1*10+ind2].setLayoutParams(lp3);
                 k[ind1*10+ind2].setText(str[ind1][ind2]);
                 k[ind1*10+ind2].setId(ind1*100+ind2);
@@ -123,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Boolean b=false;
         for (int v=0;v<moviename.length();v++){
 
+            if(!key.getText().toString().equals(""))
             if(Character.toString(moviename.charAt(v)).matches(key.getText().toString().toLowerCase())){
 
                 iv_holder[v].setText(key.getText().toString());
