@@ -51,7 +51,10 @@ public class OptionsActivity extends AppCompatActivity {
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                if(db.getAllMovieDetails().size()>0){
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));}
+                else Utils.showAlert(OptionsActivity.this,"Please Sync Db to Continue");
             }
         });
 
