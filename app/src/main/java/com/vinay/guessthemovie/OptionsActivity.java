@@ -18,12 +18,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class OptionsActivity extends AppCompatActivity {
 
+    DBHelper db;
     Button btn_start,btn_submit;
     ProgressDialog pd;
 
@@ -36,14 +39,11 @@ public class OptionsActivity extends AppCompatActivity {
         score=getSharedPreferences("score",MODE_WORLD_WRITEABLE);
 
         SharedPreferences.Editor e=score.edit();
-
-        e.putString("ggg","");
-
-        e.putString("ggggff","");
-
+        e.putInt("score",0);
+        e.putInt("nQ",0);
         e.apply();
 
-        score.getString("","0");
+        db=new DBHelper(this);
 
         btn_start= (Button) findViewById(R.id.btn_start);
         btn_submit= (Button) findViewById(R.id.btn_sync);
@@ -65,7 +65,11 @@ submitdatatoserver();
 
     private void submitdatatoserver() {
 
+        pd=new ProgressDialog(this);
+
         pd.setMessage("sync in progress");
+
+        pd.show();
 
         RequestQueue que=Volley.newRequestQueue(OptionsActivity.this);
 
@@ -73,7 +77,24 @@ submitdatatoserver();
             @Override
             public void onResponse(String response) {
 
-                //JSONArray j=
+
+                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                try {
+                    JSONObject j=new JSONObject(response);
+
+                    JSONArray ja=j.getJSONArray("data");
+
+                    pd.setMessage("add to local db");
+                    long a= db.addMovieDetails(ja);
+                    Toast.makeText(getApplicationContext(),a+"",Toast.LENGTH_LONG).show();
+                    pd.dismiss();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    pd.dismiss();
+                }
+
+
             }
         }, new Response.ErrorListener() {
             @Override

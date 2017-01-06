@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private long a=0;
+    private static long a=0;
 
     public DBHelper(Context context) {
         super(context,"MovieName.db", null, 1);
@@ -27,32 +27,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table tb_movie(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "title TEXT," +
-                "Actors TEXT," +
-                "Director TEXT," +
-                "Genre TEXT," +
-                "Language TEXT," +
-                "Plot TEXT," +
-                "Poster TEXT," +
-                "Year TEXT;");
+        sqLiteDatabase.execSQL("create table tb_movie(id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT,Actors TEXT,Director TEXT,Genre TEXT,Language TEXT,Plot TEXT,Poster TEXT,Year TEXT);" );
+    //sqLiteDatabase.execSQL("create table tb_employee(id INTEGER PRIMARY KEY AUTOINCREMENT,emp_name TEXT,age INTEGER);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS tb_movie");
+        onCreate(sqLiteDatabase);
     }
 
     public long addMovieDetails(JSONArray jsonArray) {
 
 
-        SQLiteDatabase db = this.getWritableDatabase();
+
 
         for (int i = 0; i < jsonArray.length(); i++) {
 
             try {
                 JSONObject jsonObject=jsonArray.getJSONObject(i);
-
+                SQLiteDatabase db = this.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put("title", jsonObject.getString("title"));
                 values.put("Actors", jsonObject.getString("Actors"));
@@ -64,14 +58,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 values.put("Year", jsonObject.getString("Year"));
 
                 // Inserting Row
-                a = db.insert("tb_movie", null, values);
-
+                a += db.insert("tb_movie", null, values);
+                db.close(); // Closing database connection
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        db.close(); // Closing database connection
+
         return a;
     }
 
