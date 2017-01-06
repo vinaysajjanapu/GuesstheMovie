@@ -47,6 +47,8 @@ public class DBHelper extends SQLiteOpenHelper {
             try {
                 JSONObject jsonObject=jsonArray.getJSONObject(i);
                 SQLiteDatabase db = this.getWritableDatabase();
+
+               // db.delete("tb_movie","id>=?",new String[]{"0"});
                 ContentValues values = new ContentValues();
                 values.put("title", jsonObject.getString("title"));
                 values.put("Actors", jsonObject.getString("Actors"));
