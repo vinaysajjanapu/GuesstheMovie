@@ -18,6 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     String[] db = {"dhruva","roy","ram","ekkadiki pothavu chinnavada","saptagiri express","vangaveeti",
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout[] holder_row;
     Button[] iv_holder;
     ImageView[] life;
-    Button nextLevel;
+    Button nextLevel,button_Finish;
+    TextView tv_Score;
     int num_col;
     LinearLayout.LayoutParams lp1,lp2,lp3;
     int finish;
@@ -37,12 +41,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText editText;
     Button button;
     LinearLayout keyboard,livesHolder;
-    int screenWidth,screenHeight;
+    public static int screenWidth,screenHeight;
     DisplayMetrics metrics;
 
     SharedPreferences score;
 
-
+    DBHelper dBhelper;
+    ArrayList<HashMap<String,String>> m_details;
+    HashMap<String,String> movie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +76,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         screenWidth = metrics.widthPixels;
         screenHeight = metrics.heightPixels;
 
-        moviename = db[(int)(Math.random()*db.length)];
+
+        RelativeLayout ln = (RelativeLayout)findViewById(R.id.ln_holder);
+        //ln.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((getSupportActionBar().getHeight()*2)/3)));
+
+        score = getSharedPreferences("score",MODE_WORLD_WRITEABLE);
+
+        dBhelper = new DBHelper(this);
+        m_details = dBhelper.getAllMovieDetails();
+
+        movie = m_details.get((int)(Math.random()*m_details.size()));
+        moviename = movie.get("title");
+
+        //moviename = db[(int)(Math.random()*db.length)];
 
         hint = (TextView)findViewById(R.id.hint);
         hint.setText("");
@@ -81,6 +99,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nextLevel = (Button)findViewById(R.id.button_next);
         nextLevel.setVisibility(View.GONE);
         nextLevel.setOnClickListener(this);
+
+        button_Finish = (Button)findViewById(R.id.button_finish);
+        button_Finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent finish_intent = new Intent(getApplicationContext(),Finish.class);
+                startActivity(finish_intent);
+                overridePendingTransition(R.anim.slide_l,R.anim.slide_r);
+                finish();
+            }
+        });
+        tv_Score = (TextView)findViewById(R.id.tv_score);
+        tv_Score.setText(score.getInt("score",0)+" / "+score.getInt("nQ",0));
     }
 
     private void CreateHolder() {
@@ -115,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void CreateLivesIndic() {
-        RelativeLayout.LayoutParams lp_life = new RelativeLayout.LayoutParams(screenWidth/10, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp_life = new LinearLayout.LayoutParams(screenWidth/10,screenWidth/10 );
         if (life_available>0) {
             for (int l = 0; l < life_available; l++) {
                 life[l] = new ImageView(this);
@@ -130,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void UpdateLivesIndic() {
         if (life_available>=0) {
-            livesHolder.removeView(life[life_available]);
+            life[life_available].setImageResource(R.drawable.life_hollow);
+
         }
     }
 
@@ -171,9 +203,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.button_next) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_l,R.anim.slide_r);
             finish();
-        } else if(life_available==0) {
-
+        } else if((life_available==0) || (finish == moviename.length())) {
+                //no action on keyboard
         }else{
 
                 Button key = (Button) view;
@@ -237,12 +270,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void UpdateScore(Boolean win) {
-        score = getSharedPreferences("score",MODE_WORLD_WRITEABLE);
         SharedPreferences.Editor edit = score.edit();
         int i = win ? 1 : 0;
         edit.putInt("score",score.getInt("score",0)+i);
-        edit.putInt("nQ",score.getInt("nQ",0));
+        edit.putInt("nQ",score.getInt("nQ",0)+1);
         edit.apply();
+
+        tv_Score.setText(score.getInt("score",0)+" / "+score.getInt("nQ",0));
+
 
     }
 
