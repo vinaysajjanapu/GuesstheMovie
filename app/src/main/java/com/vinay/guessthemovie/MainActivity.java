@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!b) {
                     life_available--;
                     UpdateLivesIndic();
+                    UpdateHints();
                     //b=false;
 //                hint.setText("wrong attempt \n chances available = " + (5 - life_available));
                 }
@@ -247,6 +248,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
+
+    private void UpdateHints() {
+
+
+
+    }
 
     private void Finalize(Boolean win) {
         if (win){
