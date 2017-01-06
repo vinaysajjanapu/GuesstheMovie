@@ -3,7 +3,12 @@ package com.vinay.guessthemovie;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -18,8 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.BitmapTypeRequest;
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,8 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout keyboard,livesHolder;
     public static int screenWidth,screenHeight;
     DisplayMetrics metrics;
-
     SharedPreferences score;
+
+    Bitmap bitmap=null;
 
     DBHelper dBhelper;
     ArrayList<HashMap<String,String>> m_details;
@@ -88,6 +98,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         movie = m_details.get((int)(Math.random()*m_details.size()));
         moviename = movie.get("title");
 
+        if(Utils.isOnline(getApplicationContext())) {
+            Some some=new Some();
+            some.execute();
+        }else bitmap= BitmapFactory.decodeResource(getResources(),R.drawable.life);
+        // moviename= (String) ((Map.Entry)entries.next()).getValue();
         //moviename = db[(int)(Math.random()*db.length)];
 
         hint = (TextView)findViewById(R.id.hint);
@@ -253,6 +268,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void UpdateHints() {
 
+        switch(life_available+1){
+
+            case 0:hint.setText("");break;
+            case 1:{
+                hint.setText("Actors:-"+movie.get("Actors"));
+                ll_holder.setBackground( new BitmapDrawable(getResources(), bitmap));
+                break;}
+            case 2:hint.setText("Director:-"+movie.get("Director"));break;
+            case 3:hint.setText("Plot:-"+movie.get("Plot"));break;
+            case 4:hint.setText("Language:-"+movie.get("Language"));break;
+            case 5:hint.setText("Genre:-"+movie.get("Genre"));break;
+        }
 
 
     }
@@ -291,6 +318,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    class Some extends AsyncTask<String, String, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+        }
+    }
 
 }
 

@@ -92,8 +92,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 hm.put("Director", ""+cursor.getString(3));
                 hm.put("Genre", ""+cursor.getString(4));
                 hm.put("Language", ""+cursor.getInt(5));
-                hm.put("id", ""+cursor.getString(6));
                 hm.put("Plot", ""+cursor.getString(7));
+                hm.put("Poster", ""+cursor.getString(6));
                 hm.put("Year", ""+cursor.getString(8));
                 // Adding emp to list
                 alEmpList.add(hm);
