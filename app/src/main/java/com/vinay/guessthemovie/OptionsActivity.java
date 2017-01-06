@@ -58,7 +58,7 @@ public class OptionsActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-submitdatatoserver();
+                submitdatatoserver();
             }
         });
     }
