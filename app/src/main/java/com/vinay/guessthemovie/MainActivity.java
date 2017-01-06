@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         screenHeight = metrics.heightPixels;
 
 
+        RelativeLayout ln = (RelativeLayout)findViewById(R.id.ln_holder);
+        //ln.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((getSupportActionBar().getHeight()*2)/3)));
+
         score = getSharedPreferences("score",MODE_WORLD_WRITEABLE);
 
         dBhelper = new DBHelper(this);
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View view) {
                 Intent finish_intent = new Intent(getApplicationContext(),Finish.class);
                 startActivity(finish_intent);
+                overridePendingTransition(R.anim.slide_l,R.anim.slide_r);
                 finish();
             }
         });
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void CreateLivesIndic() {
-        RelativeLayout.LayoutParams lp_life = new RelativeLayout.LayoutParams(screenWidth/10, ViewGroup.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp_life = new LinearLayout.LayoutParams(screenWidth/10,screenWidth/10 );
         if (life_available>0) {
             for (int l = 0; l < life_available; l++) {
                 life[l] = new ImageView(this);
@@ -157,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void UpdateLivesIndic() {
         if (life_available>=0) {
-            livesHolder.removeView(life[life_available]);
+            life[life_available].setImageResource(R.drawable.life_hollow);
+
         }
     }
 
@@ -198,9 +203,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view.getId() == R.id.button_next) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_l,R.anim.slide_r);
             finish();
-        } else if(life_available==0) {
-
+        } else if((life_available==0) || (finish == moviename.length())) {
+                //no action on keyboard
         }else{
 
                 Button key = (Button) view;

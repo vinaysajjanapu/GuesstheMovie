@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@color/colorPrimaryDark"
         android:theme="?actionBarStyle"
         android:padding="5dp">
 
@@ -30,6 +30,7 @@
             android:id="@+id/tv_score"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
+            android:textColor="@android:color/white"
             android:layout_toStartOf="@+id/button_finish"
             android:text="temp" />
 
@@ -62,39 +63,37 @@
         android:id="@+id/Ll_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/lives_holder"
-        android:layout_marginBottom="50dp"
+        android:layout_above="@+id/ln_holder"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="0dp" />
+        android:padding="0dp"
+        android:layout_marginBottom="?android:actionBarSize"/>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_above="@+id/keyboard"
+    android:id="@+id/ln_holder"
+    android:layout_height="?android:actionBarSize">
 
     <LinearLayout
         android:id="@+id/lives_holder"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/next_region"
-        android:gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_alignParentLeft="true"
         android:orientation="horizontal">
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/next_region"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/keyboard"
-        android:padding="10dp">
+        android:layout_alignParentRight="true"
+        android:text="next level"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/button_next"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="next level"
-            android:visibility="gone" />
-
-    </RelativeLayout>
+</RelativeLayout>
 
     <LinearLayout
         android:id="@+id/keyboard"

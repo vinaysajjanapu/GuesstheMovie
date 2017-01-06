@@ -1,8 +1,10 @@
 package com.vinay.guessthemovie;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,13 +37,16 @@ public class Finish extends AppCompatActivity {
         tv_summary.setText("Total questions : " + score.getInt("nQ",0) + " \n Questions Correct : " + score.getInt("score",0) );
         tv_mainscore.setText(score.getInt("score",0)+" / " + score.getInt("nQ",0) );
 
-        percent_score = (int)((((float)score.getInt("score",0))/((float)score.getInt("nQ",0)))*100);
+        float a = (float)score.getInt("score",0);
+        float b = (float)score.getInt("nQ",0);
+
+        percent_score = (int)(100*(a/b));
 
         if (percent_score==100){
             nStars = 3;
-        }else if (percent_score>90){
+        }else if (percent_score>60){
             nStars = 2;
-        }else if (percent_score>80){
+        }else if (percent_score>10){
             nStars = 1;
         }else {
             nStars = 0;
@@ -49,13 +54,34 @@ public class Finish extends AppCompatActivity {
 
         LinearLayout.LayoutParams lp_star = new LinearLayout.LayoutParams(MainActivity.screenWidth/10, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        for (int l = 0; l < nStars; l++) {
+        for (int l = 0; l < 3; l++) {
             star[l] = new ImageView(this);
             star[l].setLayoutParams(lp_star);
             star[l].setPadding(5,5,5,5);
-            star[l].setImageResource(R.drawable.star);
+            if (l<nStars) {
+                star[l].setImageResource(R.drawable.star);
+            }else {
+                star[l].setImageResource(R.drawable.star_hollow);
+            }
             starsHolder.addView(star[l]);
         }
 
+        replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ResetScore();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                overridePendingTransition(R.anim.slide_l1,R.anim.slide_r1);
+                finish();
+            }
+        });
+
+    }
+
+    public void ResetScore() {
+        SharedPreferences.Editor editor = score.edit();
+        editor.putInt("score",0);
+        editor.putInt("nQ",0);
+        editor.apply();
     }
 }
