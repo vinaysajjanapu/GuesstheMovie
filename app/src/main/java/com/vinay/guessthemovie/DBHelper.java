@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static long a=0;
+    private  long a=0;
 
     public DBHelper(Context context) {
         super(context,"MovieName.db", null, 1);

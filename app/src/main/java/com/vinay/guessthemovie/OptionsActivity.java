@@ -58,7 +58,12 @@ public class OptionsActivity extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-submitdatatoserver();
+
+                if(Utils.isOnline(getApplicationContext()))
+                {
+                    submitdatatoserver();
+                }
+                else Utils.internetAlert(OptionsActivity.this);
             }
         });
     }
