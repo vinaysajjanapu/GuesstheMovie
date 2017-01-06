@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         RelativeLayout ln = (RelativeLayout)findViewById(R.id.ln_holder);
-        //ln.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,((getSupportActionBar().getHeight()*2)/3)));
+//        ln.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,1000));
 
         score = getSharedPreferences("score",MODE_WORLD_WRITEABLE);
 
@@ -131,14 +131,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int j=0; j<r;j++){
                 iv_holder[i*num_col+j]=new Button(this);
                 iv_holder[i*num_col+j].setLayoutParams(lp2);
-                iv_holder[i*num_col+j].setTextColor(Color.BLACK);
+                iv_holder[i*num_col+j].setTextColor(Color.WHITE);
                 iv_holder[i*num_col+j].setTextSize( TypedValue.COMPLEX_UNIT_DIP,screenWidth/(4*num_col));
                 Character c=moviename.charAt(i*num_col+j);
                 if(!(c.toString().equals(" "))){
                     iv_holder[i*num_col+j].setText("_");
 
                 }else finish++;
-                iv_holder[i*num_col+j].setBackgroundColor(getResources().getColor(android.R.color.transparent));
+                iv_holder[i*num_col+j].setBackgroundColor(Color.TRANSPARENT);
                 holder_row[i].addView(iv_holder[i*num_col+j]);
             }
         }
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void CreateLivesIndic() {
-        LinearLayout.LayoutParams lp_life = new LinearLayout.LayoutParams(screenWidth/10,screenWidth/10 );
+        LinearLayout.LayoutParams lp_life = new LinearLayout.LayoutParams(screenWidth/15,screenWidth/15 );
         if (life_available>0) {
             for (int l = 0; l < life_available; l++) {
                 life[l] = new ImageView(this);
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LinearLayout[] r = new LinearLayout[4];
         Button[] k = new Button[40];
        // int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32, getResources().getDisplayMetrics());
-        lp3 = new LinearLayout.LayoutParams(screenWidth/10, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp3 = new LinearLayout.LayoutParams(screenWidth/10,3*screenWidth/20 );
         lp3.setMargins(0,0,0,0);
 
         for(int ind1=0; ind1<4;ind1++){
@@ -188,6 +188,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 k[ind1*10+ind2] = new Button(this);
                 k[ind1*10+ind2].setTextSize(TypedValue.COMPLEX_UNIT_DIP,screenWidth/40);
                 k[ind1*10+ind2].setLayoutParams(lp3);
+                k[ind1*10+ind2].setBackgroundResource(R.drawable.button_click_bg);
+                k[ind1*10+ind2].setTextColor(Color.WHITE);
                 k[ind1*10+ind2].setText(str[ind1][ind2]);
                 k[ind1*10+ind2].setId(ind1*100+ind2);
                 k[ind1*10+ind2].setOnClickListener(this);
@@ -265,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void Answer_Preview() {
         for (int v = 0; v < moviename.length(); v++) {
             iv_holder[v].setTextColor(Color.RED);
+          //  iv_holder[v].setBackgroundResource(R.drawable.button_bg);
             iv_holder[v].setText(Character.toString(moviename.charAt(v)));
         }
     }

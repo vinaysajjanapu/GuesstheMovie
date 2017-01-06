@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
+    android:background="@drawable/bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,14 +12,13 @@
         android:layout_height="?android:actionBarSize"
         android:layout_alignParentTop="true"
         android:background="@color/colorPrimaryDark"
-        android:theme="?actionBarStyle"
         android:padding="5dp">
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:textSize="15dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:textColor="@android:color/white"
@@ -73,24 +73,30 @@
     android:layout_width="match_parent"
     android:layout_above="@+id/keyboard"
     android:id="@+id/ln_holder"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:layout_height="?android:actionBarSize">
 
     <LinearLayout
         android:id="@+id/lives_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:layout_alignParentLeft="true"
         android:orientation="horizontal">
 
     </LinearLayout>
 
-    <Button
+    <ImageButton
         android:id="@+id/button_next"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="?android:actionBarSize"
+        android:scaleType="fitXY"
         android:layout_alignParentRight="true"
-        android:text="next level"
+        android:text="next"
+        android:background="@android:color/transparent"
+        android:src="@drawable/bg_next_button"
         android:visibility="gone" />
 
 </RelativeLayout>
