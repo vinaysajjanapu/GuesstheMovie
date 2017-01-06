@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int j=0; j<r;j++){
                 iv_holder[i*num_col+j]=new Button(this);
                 iv_holder[i*num_col+j].setLayoutParams(lp2);
-                iv_holder[i*num_col+j].setTextSize(TypedValue.COMPLEX_UNIT_DIP,screenWidth/(4*num_col));
+                iv_holder[i*num_col+j].setTextSize( TypedValue.COMPLEX_UNIT_DIP,screenWidth/(4*num_col));
                 Character c=moviename.charAt(i*num_col+j);
                 if(!(c.toString().equals(" "))){
                     iv_holder[i*num_col+j].setText("_");
