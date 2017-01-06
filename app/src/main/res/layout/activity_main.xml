@@ -88,7 +88,7 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <Button
         android:id="@+id/button_next"
         android:layout_width="wrap_content"
         android:layout_height="?android:actionBarSize"
