@@ -1,5 +1,6 @@
 package com.vinay.guessthemovie;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,18 +21,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout ll_holder;
     LinearLayout[] holder_row;
     Button[] iv_holder;
+    ImageView[] life;
+    Button nextLevel;
     int num_col;
     LinearLayout.LayoutParams lp1,lp2;
     int finish;
     TextView hint;
 
-    int five;
+    int life_available;
     EditText editText;
     Button button;
-    LinearLayout keyboard;
-
+    LinearLayout keyboard,livesHolder;
     int screenWidth,screenHeight;
     DisplayMetrics metrics;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,16 +44,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Initialize();
         CreateHolder();
+        CreateLivesIndic();
         CreateKeyBoard();
 
 
     }
 
+
     private void Initialize() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getSupportActionBar().hide();
         num_col=8;
-        five=5;
+        life_available=5;
         finish=0;
 
         metrics = new DisplayMetrics();
@@ -60,6 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         hint = (TextView)findViewById(R.id.hint);
         hint.setText("");
 
+        livesHolder = (LinearLayout)findViewById(R.id.lives_holder);
+        life = new ImageView[5];
+
+        nextLevel = (Button)findViewById(R.id.button_next);
+        nextLevel.setVisibility(View.GONE);
+        nextLevel.setOnClickListener(this);
     }
 
     private void CreateHolder() {
@@ -87,6 +101,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 iv_holder[i*num_col+j].setBackgroundColor(getResources().getColor(android.R.color.transparent));
                 holder_row[i].addView(iv_holder[i*num_col+j]);
             }
+        }
+    }
+
+
+    private void CreateLivesIndic() {
+        if (life_available>0) {
+            for (int l = 0; l < life_available; l++) {
+                life[l] = new ImageView(this);
+                life[l].setImageResource(R.mipmap.ic_launcher);
+                livesHolder.addView(life[l]);
+            }
+        }
+    }
+
+
+    private void UpdateLivesIndic() {
+        if (life_available>=0) {
+            livesHolder.removeView(life[life_available]);
         }
     }
 
@@ -124,40 +156,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        Button key = (Button)view;
-        Boolean b=false;
-        for (int v=0;v<moviename.length();v++) {
+        if (view.getId() == R.id.button_next) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
 
-            if (!key.getText().toString().equals("")) {
-                if (Character.toString(moviename.charAt(v)).matches(key.getText().toString().toLowerCase())) {
+            Button key = (Button) view;
+            Boolean b = false;
+            for (int v = 0; v < moviename.length(); v++) {
 
-                    iv_holder[v].setText(key.getText().toString());
-                    b = true;
-                    finish++;
-                    //Toast.makeText(getApplicationContext(),finish+"",Toast.LENGTH_SHORT).show();
-                }
+                if (!key.getText().toString().equals("")) {
 
+                    if (Character.toString(moviename.charAt(v)).matches(key.getText().toString().toLowerCase())) {
 
-                if (!b) {
-                    five--;
-                    hint.setText("wrong attempt " + (5 - five));
-                }
-
-
-                if (finish == moviename.length() || (five == 0)) {
-                    if (five == 0) {
-                        hint.setText("All lifes over");
-
-
-                    } else {
-                        hint.setText("Congratulations");
+                        iv_holder[v].setText(key.getText().toString());
+                        b = true;
+                        finish++;
+                        //Toast.makeText(getApplicationContext(),finish+"",Toast.LENGTH_SHORT).show();
                     }
-
-                    //this.recreate();
                 }
+            }
+
+            if (!b) {
+                life_available--;
+                UpdateLivesIndic();
+                //b=false;
+                hint.setText("wrong attempt \n" +
+                        "chances available = " + (5 - life_available));
+            }
+
+            if (finish == moviename.length() || (life_available == 0)) {
+                if (life_available == 0) {
+                    hint.setText("All life_availables over");
+
+                } else {
+                    hint.setText("Congratulations");
+
+                }
+
+                nextLevel.setVisibility(View.VISIBLE);
             }
         }
     }
+
 
 }
 
