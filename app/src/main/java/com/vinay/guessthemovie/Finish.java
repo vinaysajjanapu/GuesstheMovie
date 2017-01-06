@@ -30,7 +30,6 @@ public class Finish extends AppCompatActivity {
         tv_mainscore = (TextView)findViewById(R.id.main_score);
         starsHolder = (LinearLayout)findViewById(R.id.star_holder);
         replay = (ImageButton)findViewById(R.id.button_replay);
-
         star = new ImageView[3];
 
         tv_summary.setText("Total questions : " + score.getInt("nQ",0) + " \n Questions Correct : " + score.getInt("score",0) );
