@@ -243,6 +243,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         edit.putInt("score",score.getInt("score",0)+i);
         edit.putInt("nQ",score.getInt("nQ",0));
         edit.apply();
+
     }
 
 
