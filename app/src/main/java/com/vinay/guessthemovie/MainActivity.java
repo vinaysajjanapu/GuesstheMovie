@@ -18,13 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.BitmapTypeRequest;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout[] holder_row;
     Button[] iv_holder;
     ImageView[] life;
-    Button nextLevel,button_Finish;
+    ImageButton nextLevel,button_Finish;
     TextView tv_Score;
     int num_col;
     LinearLayout.LayoutParams lp1,lp2,lp3;
@@ -111,11 +110,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         livesHolder = (LinearLayout)findViewById(R.id.lives_holder);
         life = new ImageView[5];
 
-        nextLevel = (Button)findViewById(R.id.button_next);
-        nextLevel.setVisibility(View.GONE);
+        nextLevel = (ImageButton) findViewById(R.id.button_next);
+        nextLevel.setVisibility(View.INVISIBLE);
         nextLevel.setOnClickListener(this);
 
-        button_Finish = (Button)findViewById(R.id.button_finish);
+        button_Finish = (ImageButton) findViewById(R.id.button_finish);
         button_Finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,12 +285,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void Finalize(Boolean win) {
         if (win){
-            nextLevel.setTextColor(Color.BLACK);
-            nextLevel.setBackgroundColor(Color.GREEN);
+            //nextLevel.setTextColor(Color.BLACK);
+            nextLevel.setColorFilter(Color.GREEN);
 
         }else {
-            nextLevel.setTextColor(Color.WHITE);
-            nextLevel.setBackgroundColor(Color.RED);
+           // nextLevel.setTextColor(Color.WHITE);
+            nextLevel.setColorFilter(Color.RED);
             Answer_Preview();
 
         }
