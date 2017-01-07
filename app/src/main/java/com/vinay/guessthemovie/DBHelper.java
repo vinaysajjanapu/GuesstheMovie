@@ -39,14 +39,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public long addMovieDetails(JSONArray jsonArray) {
 
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        db.delete("tb_movie","id>=?",new String[]{"0"});
 
 
         for (int i = 0; i < jsonArray.length(); i++) {
 
             try {
                 JSONObject jsonObject=jsonArray.getJSONObject(i);
-                SQLiteDatabase db = this.getWritableDatabase();
+                //SQLiteDatabase db = this.getWritableDatabase();
 
                // db.delete("tb_movie","id>=?",new String[]{"0"});
                 ContentValues values = new ContentValues();
@@ -61,13 +63,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 // Inserting Row
                 a += db.insert("tb_movie", null, values);
-                db.close(); // Closing database connection
+               // db.close(); // Closing database connection
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-
+            db.close();
         return a;
     }
 

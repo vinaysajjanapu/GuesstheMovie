@@ -55,13 +55,13 @@ public class OptionsActivity extends AppCompatActivity {
 
                     if (Utils.isOnline(getApplicationContext())) {
                         submitdatatoserver();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        //startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } else {
                     if (Utils.isOnline(getApplicationContext())) {
                         submitdatatoserver();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
                     } else Utils.internetAlert(OptionsActivity.this);
                 }
             }});
@@ -83,7 +83,7 @@ public class OptionsActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
 
-                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                 try {
                     JSONObject j=new JSONObject(response);
 
@@ -91,8 +91,9 @@ public class OptionsActivity extends AppCompatActivity {
 
                     pd.setMessage("add to local db");
                     long a= db.addMovieDetails(ja);
-                    Toast.makeText(getApplicationContext(),a+"",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),a+"  size:-"+db.getAllMovieDetails().size(),Toast.LENGTH_LONG).show();
                     pd.dismiss();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
