@@ -59,7 +59,10 @@ public class OptionsActivity extends AppCompatActivity {
                     } else startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } else {
-                    Utils.internetAlert(OptionsActivity.this);
+                    if (Utils.isOnline(getApplicationContext())) {
+                        submitdatatoserver();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else Utils.internetAlert(OptionsActivity.this);
                 }
             }});
         }
