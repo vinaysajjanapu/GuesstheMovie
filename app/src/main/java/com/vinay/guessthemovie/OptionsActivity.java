@@ -75,48 +75,63 @@ public class OptionsActivity extends AppCompatActivity {
 
         pd.show();
 
-        RequestQueue que=Volley.newRequestQueue(OptionsActivity.this);
 
-        StringRequest s=new StringRequest(Request.Method.POST, "http://whencutwini.16mb.com/GuessTheMovie/getMovies.php",
-                new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+       // Toast.makeText(getApplicationContext(), db.cleanDb()+"", Toast.LENGTH_SHORT).show();
 
 
-                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
-                try {
-                    JSONObject j=new JSONObject(response);
+        for(int i=1;i<=50;i++) {
 
-                    JSONArray ja=j.getJSONArray("data");
+        RequestQueue que = Volley.newRequestQueue(OptionsActivity.this);
+    //http://whencutwini.16mb.com/GuessTheMovie/getMovies.php
+//
+            final int finalI = i;
+            StringRequest s = new StringRequest(Request.Method.POST,
+            "http://api.themoviedb.org/3/movie/top_rated?api_key=87827f3c119a9d103cb4f2e78112046f&page="+i,
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
 
-                    pd.setMessage("add to local db");
-                    long a= db.addMovieDetails(ja);
-                    Toast.makeText(getApplicationContext(),a+"  size:-"+db.getAllMovieDetails().size(),Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    pd.dismiss();
+                    Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONObject j = new JSONObject(response);
+
+                        JSONArray ja = j.getJSONArray("results");
+
+                       // pd.setMessage("add to local db");
+                        long a = db.addMovieDetails(ja);
+                        if(finalI ==49) {
+                            Toast.makeText(getApplicationContext(), a + "  size:-" + db.getAllMovieDetails().size(), Toast.LENGTH_LONG).show();
+                            pd.dismiss();
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        pd.hide();
+                    }
+
+
                 }
+            }, new Response.ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError error) {
+
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+            pd.dismiss();
+        }
+    }) {
+        protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> p = new HashMap<String, String>();
+
+            return p;
+        }
+    };
+
+    que.add(s);
+}
 
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(getApplicationContext(), error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        }){
-           protected  Map<String,String> getParams() throws AuthFailureError{
-                Map<String,String> p=new HashMap<String, String>();
-
-                return p;
-            }
-        };
-
-          que.add(s);
+       // pd.dismiss();
 
     }
 }

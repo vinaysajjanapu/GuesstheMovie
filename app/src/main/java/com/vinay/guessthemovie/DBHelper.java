@@ -37,11 +37,20 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    public int cleanDb(){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        return db.delete("tb_movie","id>=?",new String[]{"0"});
+
+    }
+
+
     public long addMovieDetails(JSONArray jsonArray) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete("tb_movie","id>=?",new String[]{"0"});
+       // db.delete("tb_movie","id>=?",new String[]{"0"});
 
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -53,16 +62,16 @@ public class DBHelper extends SQLiteOpenHelper {
                // db.delete("tb_movie","id>=?",new String[]{"0"});
                 ContentValues values = new ContentValues();
                 values.put("title", jsonObject.getString("title"));
-                values.put("Actors", jsonObject.getString("Actors"));
-                values.put("Director", jsonObject.getString("Director"));
-                values.put("Genre", jsonObject.getString("Genre"));
-                values.put("Language", jsonObject.getString("Language"));
-                values.put("Plot", jsonObject.getString("Plot"));
-                values.put("Poster", jsonObject.getString("Poster"));
-                values.put("Year", jsonObject.getString("Year"));
+                values.put("Actors", jsonObject.getString("title"));
+                values.put("Director", jsonObject.getString("title"));
+                values.put("Genre", jsonObject.getString("title"));
+                values.put("Language", jsonObject.getString("title"));
+                values.put("Plot", jsonObject.getString("title"));
+                values.put("Poster", jsonObject.getString("title"));
+                values.put("Year", jsonObject.getString("title"));
 
                 // Inserting Row
-                a += db.insert("tb_movie", null, values);
+                a = db.insert("tb_movie", null, values);
                // db.close(); // Closing database connection
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -90,10 +99,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 hm=new HashMap<String,String>();
                 hm.put("id", ""+cursor.getInt(0));
                 hm.put("title", ""+cursor.getString(1));
-                hm.put("Actors", ""+cursor.getInt(2));
+                hm.put("Actors", ""+cursor.getString(2));
                 hm.put("Director", ""+cursor.getString(3));
                 hm.put("Genre", ""+cursor.getString(4));
-                hm.put("Language", ""+cursor.getInt(5));
+                hm.put("Language", ""+cursor.getString(5));
                 hm.put("Plot", ""+cursor.getString(7));
                 hm.put("Poster", ""+cursor.getString(6));
                 hm.put("Year", ""+cursor.getString(8));

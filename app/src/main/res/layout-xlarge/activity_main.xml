@@ -30,10 +30,16 @@
             android:id="@+id/tv_score"
             android:layout_centerVertical="true"
             android:layout_margin="5dp"
-            android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
+            android:layout_toStartOf="@+id/button_finish"
             android:text="temp" />
 
+        <Button
+            android:id="@+id/button_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="finish" />
     </RelativeLayout>
 
     <TextView
@@ -42,8 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/custom_actionBar"
         android:gravity="center_horizontal"
-        android:text="Hint"
-        android:textColor="@android:color/background_light"/>
+        android:text="Hint" />
 
     <TextView
         android:id="@+id/hint"
@@ -52,8 +57,7 @@
         android:layout_below="@+id/H_hint"
         android:gravity="center_horizontal"
         android:paddingBottom="40dp"
-        android:text=""
-        android:textColor="#fff"/>
+        android:text="" />
 
     <LinearLayout
         android:id="@+id/Ll_holder"
@@ -79,35 +83,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_centerInParent="true"
         android:layout_alignParentLeft="true"
         android:orientation="horizontal">
 
     </LinearLayout>
 
-
-    <ImageButton
-        android:id="@+id/button_finish"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/bg"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="?android:actionBarSize"
-        android:layout_alignParentRight="true"
-
-        />
-
-    <ImageButton
+    <Button
         android:id="@+id/button_next"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="?android:actionBarSize"
         android:scaleType="fitXY"
-        android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
+        android:text="next"
         android:background="@android:color/transparent"
         android:src="@drawable/bg_next_button"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
 </RelativeLayout>
 
