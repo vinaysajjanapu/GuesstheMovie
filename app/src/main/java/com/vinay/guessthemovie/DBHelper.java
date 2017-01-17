@@ -44,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //db.delete("tb_movie","id>=?",new String[]{"0"});
 
 
+
         for (int i = 0; i < jsonArray.length(); i++) {
 
             try {
