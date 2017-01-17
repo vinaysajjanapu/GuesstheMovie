@@ -122,8 +122,6 @@ public class OptionsActivity extends AppCompatActivity {
                 }
             };
 
-
-
             que.add(s);
         }
     }
