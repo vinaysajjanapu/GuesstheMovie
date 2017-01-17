@@ -118,7 +118,6 @@ public class OptionsActivity extends AppCompatActivity {
             }) {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> p = new HashMap<String, String>();
-
                     return p;
                 }
             };
