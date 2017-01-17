@@ -3,10 +3,9 @@ package com.vinay.guessthemovie;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -30,6 +29,7 @@ public class OptionsActivity extends AppCompatActivity {
     DBHelper db;
     ImageButton btn_start;
     ProgressDialog pd;
+    static int i=1;
 
     SharedPreferences score;
     @Override
@@ -76,48 +76,54 @@ public class OptionsActivity extends AppCompatActivity {
 
         pd.show();
 
-        RequestQueue que=Volley.newRequestQueue(OptionsActivity.this);
+        for(i=1;i<5;i++) {
 
-        StringRequest s=new StringRequest(Request.Method.POST, "http://whencutwini.16mb.com/GuessTheMovie/getMovies.php",
-                new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+            RequestQueue que = Volley.newRequestQueue(OptionsActivity.this);
 
 
-                //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
-                try {
-                    JSONObject j=new JSONObject(response);
+            StringRequest s = new StringRequest(Request.Method.POST,
+                    "http://api.themoviedb.org/3/discover/movie?certification=R&sort_by=revenue.desc&api_key=87827f3c119a9d103cb4f2e78112046f&page=" + i,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                    JSONArray ja=j.getJSONArray("data");
 
-                    pd.setMessage("add to local db");
-                    long a= db.addMovieDetails(ja);
-                    Toast.makeText(getApplicationContext(),a+"  size:-"+db.getAllMovieDetails().size(),Toast.LENGTH_LONG).show();
-                    pd.dismiss();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            //Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
+                            try {
+                                JSONObject j = new JSONObject(response);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    pd.dismiss();
+                                JSONArray ja = j.getJSONArray("results");
+
+                                pd.setMessage("add to local db");
+                                long a = db.addMovieDetails(ja);
+                                if(j.getString("page").equals("4")) {
+                                    Toast.makeText(getApplicationContext(), a + "  size:-" + db.getAllMovieDetails().size(), Toast.LENGTH_LONG).show();
+                                    pd.dismiss();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                pd.dismiss();
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }
+            }) {
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> p = new HashMap<String, String>();
 
+                    return p;
+                }
+            };
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(getApplicationContext(), error.getMessage(),Toast.LENGTH_LONG).show();
-            }
-        }){
-           protected  Map<String,String> getParams() throws AuthFailureError{
-                Map<String,String> p=new HashMap<String, String>();
-
-                return p;
-            }
-        };
-
-          que.add(s);
-
+            que.add(s);
+        }
     }
 }

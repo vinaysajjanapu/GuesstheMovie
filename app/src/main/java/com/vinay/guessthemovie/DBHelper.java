@@ -41,7 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        db.delete("tb_movie","id>=?",new String[]{"0"});
+        //db.delete("tb_movie","id>=?",new String[]{"0"});
 
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -53,13 +53,13 @@ public class DBHelper extends SQLiteOpenHelper {
                // db.delete("tb_movie","id>=?",new String[]{"0"});
                 ContentValues values = new ContentValues();
                 values.put("title", jsonObject.getString("title"));
-                values.put("Actors", jsonObject.getString("Actors"));
-                values.put("Director", jsonObject.getString("Director"));
-                values.put("Genre", jsonObject.getString("Genre"));
-                values.put("Language", jsonObject.getString("Language"));
-                values.put("Plot", jsonObject.getString("Plot"));
-                values.put("Poster", jsonObject.getString("Poster"));
-                values.put("Year", jsonObject.getString("Year"));
+                values.put("Actors", jsonObject.getString("adult"));
+                values.put("Director", jsonObject.getString("adult"));
+                values.put("Genre", jsonObject.getString("adult"));
+                values.put("Language", jsonObject.getString("original_language"));
+                values.put("Plot", jsonObject.getString("overview"));
+                values.put("Poster", jsonObject.getString("poster_path"));
+                values.put("Year", jsonObject.getString("release_date"));
 
                 // Inserting Row
                 a += db.insert("tb_movie", null, values);
