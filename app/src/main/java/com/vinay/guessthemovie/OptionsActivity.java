@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -27,7 +28,7 @@ import java.util.Map;
 public class OptionsActivity extends AppCompatActivity {
 
     DBHelper db;
-    Button btn_start;
+    ImageButton btn_start;
     ProgressDialog pd;
 
     SharedPreferences score;
@@ -45,7 +46,7 @@ public class OptionsActivity extends AppCompatActivity {
 
         db=new DBHelper(this);
 
-        btn_start= (Button) findViewById(R.id.btn_start);
+        btn_start= (ImageButton) findViewById(R.id.btn_start);
 
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
