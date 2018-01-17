@@ -317,7 +317,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected void onPostExecute(String s) {
 
-//            editText.setText(movie.getBackdrop_path());
         }
     }
 

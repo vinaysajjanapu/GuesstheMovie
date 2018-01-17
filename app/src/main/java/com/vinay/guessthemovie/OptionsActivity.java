@@ -24,6 +24,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     DBHelper db;
     Button btn_telugu, btn_eng, btn_hin;
     ProgressDialog pd;
+    static int i=1;
 
     SharedPreferences score;
 
