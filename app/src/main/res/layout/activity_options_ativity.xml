@@ -12,23 +12,40 @@
     tools:context="com.vinay.guessthemovie.OptionsActivity">
 
 
-
-    <Button
-        android:id="@+id/btn_start"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_sync"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="sync"
-        android:layout_above="@+id/btn_start"
-        android:layout_marginBottom="40dp"
-        android:layout_alignStart="@+id/btn_start"
-        android:layout_alignLeft="@+id/btn_start"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/btn_English"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="English" />
+
+        <Button
+            android:id="@+id/btn_Hindi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Hindi" />
+
+        <Button
+            android:id="@+id/btn_Telugu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Telugu" />
+
+        <Button
+            android:id="@+id/btn_Tamil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Tamil" />
+
+    </LinearLayout>
 
 </RelativeLayout>

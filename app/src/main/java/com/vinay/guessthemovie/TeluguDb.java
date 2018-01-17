@@ -3,10 +3,10 @@ package com.vinay.guessthemovie;
 import java.util.List;
 
 /**
- * Created by salimatti on 1/16/2017.
+ * Created by salimatte on 13-01-2018.
  */
 
-public class HelpDb {
+public class TeluguDb {
 
     private int page;
     private int total_results;
@@ -50,7 +50,7 @@ public class HelpDb {
         private int vote_count;
         private int id;
         private boolean video;
-        private int vote_average;
+        private float vote_average;
         private String title;
         private double popularity;
         private String poster_path;
@@ -86,7 +86,7 @@ public class HelpDb {
             this.video = video;
         }
 
-        public int getVote_average() {
+        public float getVote_average() {
             return vote_average;
         }
 
