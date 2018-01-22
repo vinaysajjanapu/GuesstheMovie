@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "234945601769",
+    "firebase_url": "https://guessthemovie-91423288.firebaseio.com",
+    "project_id": "guessthemovie-91423288",
+    "storage_bucket": "guessthemovie-91423288.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234945601769:android:bfdad3e733c3d7d8",
+        "android_client_info": {
+          "package_name": "com.vinay.guessthemovie"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234945601769-en6232vcakhkqeltvcjebaudnrflk3r7.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "234945601769-bit890amucibi59ujp90bmpru2g8adb4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vinay.guessthemovie",
+            "certificate_hash": "62da6c33937e31f924d956281d2c8dad0a10ae46"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA2HA6FvPAKq4omVTMACQ-j1cCohSuylA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "234945601769-en6232vcakhkqeltvcjebaudnrflk3r7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
