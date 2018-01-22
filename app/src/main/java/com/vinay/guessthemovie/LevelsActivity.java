@@ -36,10 +36,10 @@ public class LevelsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels);
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
+        MobileAds.initialize(this, getString(R.string.AdmobAppId));
         AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("28E0DB4FBF1A52ABC4781B3D45FD2C8E").build();
         mAdView.loadAd(adRequest);
 
         List<LevelModel> levelModels = new ArrayList<>();
@@ -101,15 +101,16 @@ public class LevelsActivity extends AppCompatActivity {
 
         RequestQueue que = Volley.newRequestQueue(LevelsActivity.this);
         StringRequest s = new StringRequest(Request.Method.POST,
-                "https://api.themoviedb.org/3/discover/movie?api_key=7e8f60e325cd06e164799af1e317d7a7&with_original_language=" + language + "&page=" + page_number + "&primary_release_date.gte=2014",
+                "https://api.themoviedb.org/3/discover/movie?api_key=7e8f60e325cd06e164799af1e317d7a7&with_original_language=" + language + "&page=" + page_number /*+ "&primary_release_date.gte=2000"*/,
                 response -> {
                     //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     try {
                         pd.dismiss();
                         Gson gson = new Gson();
-                        TeluguDb teluguDb = gson.fromJson(response, TeluguDb.class);
+                        MovieDb movieDb = gson.fromJson(response, MovieDb.class);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class)
-                                .putExtra("det", response));
+                                .putExtra("det", response)
+                                .putExtra("QNO", 0));
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();

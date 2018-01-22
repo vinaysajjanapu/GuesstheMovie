@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Google Play game services IDs.
+    Save this file as res/values/games-ids.xml in your project.
+    -->
+<resources>
+    <!-- app_id -->
+    <string name="app_id" translatable="false">234945601769</string>
+    <!-- package_name -->
+    <string name="package_name" translatable="false">com.vinay.guessthemovie</string>
+    <!-- achievement Score a perfect -->
+    <string name="achievement_score_a_perfect" translatable="false">CgkI6cHlnusGEAIQAQ</string>
+    <!-- leaderboard Telugu Score -->
+    <string name="leaderboard_telugu_score" translatable="false">CgkI6cHlnusGEAIQAg</string>
+    <!-- event Started Playing -->
+    <string name="event_started_playing" translatable="false">CgkI6cHlnusGEAIQAA</string>
+
+</resources>

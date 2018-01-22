@@ -6,7 +6,7 @@ import java.util.List;
  * Created by salimatte on 13-01-2018.
  */
 
-public class TeluguDb {
+public class MovieDb {
 
     private int page;
     private int total_results;

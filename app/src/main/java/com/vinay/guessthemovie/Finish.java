@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -67,15 +66,13 @@ public class Finish extends AppCompatActivity {
             starsHolder.addView(star[l]);
         }
 
-        replay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ResetScore();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtras(getIntent()));
-                overridePendingTransition(R.anim.slide_l1, R.anim.slide_r1);
-                finish();
-            }
+        replay.setOnClickListener(view -> {
+            ResetScore();
+            startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtras(getIntent()));
+            overridePendingTransition(R.anim.slide_l1, R.anim.slide_r1);
+            finish();
         });
+
 
     }
 

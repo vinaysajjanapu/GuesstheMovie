@@ -24,14 +24,14 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     DBHelper db;
     Button btn_telugu, btn_eng, btn_hin;
     ProgressDialog pd;
-    static int i=1;
+    static int i = 1;
 
     SharedPreferences score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options_ativity);
+        setContentView(R.layout.activity_options);
 
         score = getSharedPreferences("score", MODE_PRIVATE);
 
@@ -64,15 +64,15 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         RequestQueue que = Volley.newRequestQueue(OptionsActivity.this);
         String url = " https://api.themoviedb.org/3/discover/movie?api_key=7e8f60e325cd06e164799af1e317d7a7&primary_release_year=2017&sort_by=vote_average.desc&&page=1";
         StringRequest s = new StringRequest(Request.Method.POST,
-                "https://api.themoviedb.org/3/discover/movie?api_key=7e8f60e325cd06e164799af1e317d7a7&with_original_language=" + language + "&page=1&primary_release_date.gte=2014",
+                "https://api.themoviedb.org/3/discover/movie?api_key=7e8f60e325cd06e164799af1e317d7a7&with_original_language=" + language,
                 response -> {
                     //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                     try {
                         pd.dismiss();
                         Gson gson = new Gson();
-                        TeluguDb teluguDb = gson.fromJson(response, TeluguDb.class);
+                        MovieDb movieDb = gson.fromJson(response, MovieDb.class);
                         startActivity(new Intent(getApplicationContext(), LevelsActivity.class)
-                                .putExtra("no_of_levels", teluguDb.getTotal_pages()  > 1000 ? 1000 : teluguDb.getTotal_pages() )
+                                .putExtra("no_of_levels", movieDb.getTotal_pages() > 1000 ? 1000 : movieDb.getTotal_pages())
                                 .putExtra("language", language));
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();

@@ -12,19 +12,21 @@
     tools:context="com.vinay.guessthemovie.OptionsActivity">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Guess the Movie"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="?android:actionBarSize"
-        android:textSize="?android:actionBarSize"/>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?android:actionBarSize"
+            android:gravity="center_horizontal"
+            android:text="Choose A Language"
+            android:textColor="@android:color/white"
+            android:textSize="32dp" />
 
         <Button
             android:id="@+id/btn_English"
@@ -55,5 +57,14 @@
             android:text="Tamil" />
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/linearLayout"
+        android:layout_marginTop="60dp"
+        android:src="@mipmap/ic_launcher" />
 
 </RelativeLayout>
