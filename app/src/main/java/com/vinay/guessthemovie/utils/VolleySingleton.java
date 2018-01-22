@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.utils;
 
 import android.graphics.Bitmap;
 
@@ -6,6 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.util.LruCache;
+import com.vinay.guessthemovie.MyApplication;
 
 public class VolleySingleton {
     private static VolleySingleton mInstance = null;

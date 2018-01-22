@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.utils;
 
 import android.app.Activity;
 import android.content.Context;

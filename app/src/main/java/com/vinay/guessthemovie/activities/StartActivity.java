@@ -1,9 +1,11 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import com.vinay.guessthemovie.R;
 
 /**
  * Created by salimatte on 17-01-2018.

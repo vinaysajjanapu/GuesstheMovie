@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.utils;
 
 import java.util.List;
 

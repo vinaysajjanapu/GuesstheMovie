@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.activities;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -10,6 +10,9 @@ import android.util.Log;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.gson.Gson;
+import com.vinay.guessthemovie.fragments.GameFragment;
+import com.vinay.guessthemovie.R;
+import com.vinay.guessthemovie.utils.MovieDb;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +48,8 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
                 }).build();
         Gson gson = new Gson();
         MovieDb helpDb = gson.fromJson(getIntent().getStringExtra("det"), MovieDb.class);
-        m_details = helpDb.getResults();
+        int SNo = getIntent().getIntExtra("QNO", 0);
+        m_details = helpDb.getResults().subList(SNo, SNo + 5);
         Collections.shuffle(m_details);
 
         getSupportFragmentManager()
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
     @Override
     public void onFragmentInteraction() {
         index++;
-        if (index < 20) {
+        if (index < 5) {
             android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.anim.slide_l, R.anim.slide_r);
             ft.replace(R.id.activity_main, new GameFragment(m_details.get(index)), "gameFragment");
@@ -67,7 +71,8 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
             Games.Leaderboards.submitScore(apiClient,
                     getString(R.string.leaderboard_telugu_score),
                     score);
-            startActivity(new Intent(getApplicationContext(), Finish.class));
+            startActivity(new Intent(getApplicationContext(), FinishActivity.class).putExtra("score", score));
+            finish();
         }
     }
 }

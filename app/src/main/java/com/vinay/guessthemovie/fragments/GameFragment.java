@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,6 +21,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.vinay.guessthemovie.R;
+import com.vinay.guessthemovie.activities.HintActivity;
+import com.vinay.guessthemovie.activities.MainActivity;
+import com.vinay.guessthemovie.utils.MovieDb;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
@@ -210,7 +214,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         } else if ((life_available == 0) || (finish == moviename.length())) {
             //no action on keyboard
         } else {
-
             Button key = (Button) view;
             Boolean b = false;
             for (int v = 0; v < moviename.length(); v++) {

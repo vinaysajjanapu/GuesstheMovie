@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.vinay.guessthemovie.OptionsActivity">
+    tools:context="com.vinay.guessthemovie.activities.OptionsActivity">
 
 
     <LinearLayout
@@ -67,4 +67,21 @@
         android:layout_marginTop="60dp"
         android:src="@mipmap/ic_launcher" />
 
+    <Button
+        android:id="@+id/btn_ml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_toEndOf="@+id/btn_kn"
+        android:layout_toRightOf="@+id/btn_kn"
+        android:text="Malayalam" />
+
+    <Button
+        android:id="@+id/btn_kn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:text="Kannada" />
 </RelativeLayout>

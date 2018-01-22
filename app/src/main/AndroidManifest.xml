@@ -24,7 +24,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".StartActivity"
+            android:name=".activities.StartActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,16 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LevelsActivity" />
-        <activity android:name=".OptionsActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Finish" />
-        <activity
-            android:name=".HintActivity"
-            android:excludeFromRecents="true"
-            android:label="HInt"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"
-            />
+        <activity android:name=".activities.LevelsActivity" />
+        <activity android:name=".activities.OptionsActivity" />
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.FinishActivity" />
+        <activity android:name=".activities.HintActivity" android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

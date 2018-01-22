@@ -1,7 +1,5 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.activities;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +9,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Finish extends AppCompatActivity {
+import com.vinay.guessthemovie.R;
 
-    SharedPreferences score;
+public class FinishActivity extends AppCompatActivity {
+
+    int score;
     TextView tv_summary, tv_mainscore;
     ImageView[] star;
     LinearLayout starsHolder;
@@ -27,18 +27,18 @@ public class Finish extends AppCompatActivity {
         getSupportActionBar().hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        score = getSharedPreferences("score", MODE_PRIVATE);
-        tv_summary = (TextView) findViewById(R.id.summary);
-        tv_mainscore = (TextView) findViewById(R.id.main_score);
-        starsHolder = (LinearLayout) findViewById(R.id.star_holder);
-        replay = (ImageButton) findViewById(R.id.button_replay);
+        score = getIntent().getIntExtra("score", 0);
+        tv_summary = findViewById(R.id.summary);
+        tv_mainscore = findViewById(R.id.main_score);
+        starsHolder = findViewById(R.id.star_holder);
+        replay = findViewById(R.id.button_replay);
         star = new ImageView[3];
 
-        tv_summary.setText("Total questions : " + score.getInt("nQ", 0) + " \n Questions Correct : " + score.getInt("score", 0));
-        tv_mainscore.setText(score.getInt("score", 0) + " / " + score.getInt("nQ", 0));
+        tv_summary.setText("Total questions : " + 5 + " \n Questions Correct : " + score);
+        tv_mainscore.setText(score + " / " + 5);
 
-        float a = (float) score.getInt("score", 0);
-        float b = (float) score.getInt("nQ", 0);
+        float a = (float) score;
+        float b = 5.00f;
 
         percent_score = (int) (100 * (a / b));
 
@@ -67,20 +67,11 @@ public class Finish extends AppCompatActivity {
         }
 
         replay.setOnClickListener(view -> {
-            ResetScore();
-            startActivity(new Intent(getApplicationContext(), MainActivity.class).putExtras(getIntent()));
             overridePendingTransition(R.anim.slide_l1, R.anim.slide_r1);
             finish();
         });
 
 
-    }
-
-    public void ResetScore() {
-        SharedPreferences.Editor editor = score.edit();
-        editor.putInt("score", 0);
-        editor.putInt("nQ", 0);
-        editor.apply();
     }
 
     @Override
@@ -91,7 +82,6 @@ public class Finish extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        ResetScore();
         super.onDestroy();
     }
 }

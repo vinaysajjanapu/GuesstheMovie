@@ -1,4 +1,4 @@
-package com.vinay.guessthemovie;
+package com.vinay.guessthemovie.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,6 +15,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.vinay.guessthemovie.R;
+import com.vinay.guessthemovie.utils.DBHelper;
+import com.vinay.guessthemovie.utils.MovieDb;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +27,6 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     DBHelper db;
     Button btn_telugu, btn_eng, btn_hin;
     ProgressDialog pd;
-    static int i = 1;
 
     SharedPreferences score;
 
@@ -46,11 +48,15 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         btn_eng = (Button) findViewById(R.id.btn_English);
         btn_hin = (Button) findViewById(R.id.btn_Hindi);
         Button btn_tam = (Button) findViewById(R.id.btn_Tamil);
+        Button btn_ml = (Button) findViewById(R.id.btn_ml);
+        Button btn_kn = (Button) findViewById(R.id.btn_kn);
 
         btn_eng.setOnClickListener(this);
         btn_tam.setOnClickListener(this);
         btn_hin.setOnClickListener(this);
         btn_telugu.setOnClickListener(this);
+        btn_ml.setOnClickListener(this);
+        btn_kn.setOnClickListener(this);
     }
 
     private void submitdatatoserver(String language) {
@@ -72,7 +78,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
                         Gson gson = new Gson();
                         MovieDb movieDb = gson.fromJson(response, MovieDb.class);
                         startActivity(new Intent(getApplicationContext(), LevelsActivity.class)
-                                .putExtra("no_of_levels", movieDb.getTotal_pages() > 1000 ? 1000 : movieDb.getTotal_pages())
+                                .putExtra("no_of_levels", movieDb.getTotal_pages() > 250 ? 250 : movieDb.getTotal_pages())
                                 .putExtra("language", language));
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -106,6 +112,12 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             case R.id.btn_Tamil:
                 submitdatatoserver("ta");
+                break;
+            case R.id.btn_ml:
+                submitdatatoserver("ml");
+                break;
+            case R.id.btn_kn:
+                submitdatatoserver("kn");
                 break;
         }
     }
