@@ -3,6 +3,8 @@ package com.vinay.guessthemovie;
 import android.app.Application;
 import android.content.Context;
 
+import io.realm.Realm;
+
 /**
  * Created by salimatte on 13-01-2018.
  */
@@ -18,6 +20,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+        Realm.init(this);
     }
 
 }

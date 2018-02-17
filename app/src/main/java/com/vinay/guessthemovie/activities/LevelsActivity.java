@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -24,6 +25,7 @@ import com.google.gson.Gson;
 import com.vinay.guessthemovie.R;
 import com.vinay.guessthemovie.utils.BetweenSpacesItemDecoration;
 import com.vinay.guessthemovie.utils.MovieDb;
+import com.vinay.guessthemovie.utils.RealmController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 public class LevelsActivity extends AppCompatActivity {
+
+    String lan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,7 @@ public class LevelsActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);*/
 
+        lan = getIntent().getStringExtra("language");
         List<LevelModel> levelModels = new ArrayList<>();
 
         for (int i = 0; i < getIntent().getIntExtra("no_of_levels", 10) * 4; i++) {
@@ -55,12 +60,28 @@ public class LevelsActivity extends AppCompatActivity {
                 this,
                 (model, finder, payloads) -> finder
                         .find(R.id.iv_level_number, (ViewProvider<ImageView>) textView -> {
-                            TextDrawable drawable = TextDrawable.builder()
-                                    .buildRect(String.valueOf(model.getNumber() + 1), Color.RED);
+                            int score = RealmController.with(this).getScore(lan + (model.getNumber() + 1));
+                            TextDrawable drawable;
+                            switch (score) {
+                                case 0:
+                                    drawable = TextDrawable.builder()
+                                            .buildRect(String.valueOf(model.getNumber() + 1), Color.RED);
+                                    break;
+                                case 5:
+                                    drawable = TextDrawable.builder()
+                                            .buildRect(String.valueOf(model.getNumber() + 1), Color.GREEN);
+                                    break;
+                                default:
+                                    drawable = TextDrawable.builder()
+                                            .buildRoundRect(String.valueOf(model.getNumber() + 1), Color.rgb(255, 223, 0), 5);
+                            }
                             textView.setImageDrawable(drawable);
                         })
+                        .find(R.id.tv_level_score, (ViewProvider<TextView>) tv -> {
+                            tv.setText(RealmController.with(this).getScore(lan + (model.getNumber() + 1)) + "/" + 5);
+                        })
                         .setOnClickListener(R.id.iv_level_number, v -> {
-                            submitdatatoserver(getIntent().getStringExtra("language"), model.getNumber());
+                            submitdatatoserver(lan, model.getNumber());
                             //startActivity(new Intent(LevelsActivity.this, MainActivity.class));
                         })
         ));
@@ -111,7 +132,10 @@ public class LevelsActivity extends AppCompatActivity {
                         MovieDb movieDb = gson.fromJson(response, MovieDb.class);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class)
                                 .putExtra("det", response)
+                                .putExtra("lan", language)
+                                .putExtra("lv", page_number + 1)
                                 .putExtra("QNO", (page_number % 4) * 5));
+                        finish();
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();

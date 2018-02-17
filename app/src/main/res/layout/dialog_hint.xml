@@ -19,6 +19,8 @@
             android:id="@+id/tv_ht"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:text="hint"/>
     </LinearLayout>
 </ScrollView>

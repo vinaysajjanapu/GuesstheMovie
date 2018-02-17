@@ -10,12 +10,16 @@ import android.util.Log;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.gson.Gson;
-import com.vinay.guessthemovie.fragments.GameFragment;
 import com.vinay.guessthemovie.R;
+import com.vinay.guessthemovie.fragments.GameFragment;
 import com.vinay.guessthemovie.utils.MovieDb;
+import com.vinay.guessthemovie.utils.RealmController;
+import com.vinay.guessthemovie.utils.ScoreObject;
 
 import java.util.Collections;
 import java.util.List;
+
+import io.realm.Realm;
 
 public class MainActivity extends AppCompatActivity implements GameFragment.OnFragmentInteractionListener {
 
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
     List<MovieDb.ResultsBean> m_details;
     int index = 0;
     public static int score, nQ;
+    String language;
+    int lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
                 .beginTransaction()
                 .add(R.id.activity_main, new GameFragment(m_details.get(index)))
                 .commit();
+
+        language = getIntent().getStringExtra("lan");
+        lv = getIntent().getIntExtra("lv", 0);
     }
 
 
@@ -68,10 +77,48 @@ public class MainActivity extends AppCompatActivity implements GameFragment.OnFr
             ft.replace(R.id.activity_main, new GameFragment(m_details.get(index)), "gameFragment");
             ft.commit();
         } else {
-            Games.Leaderboards.submitScore(apiClient,
-                    getString(R.string.leaderboard_telugu_score),
-                    score);
-            startActivity(new Intent(getApplicationContext(), FinishActivity.class).putExtra("score", score));
+            Realm realm = Realm.getDefaultInstance();
+            ScoreObject scoreObject = realm.where(ScoreObject.class)
+                    .equalTo("key", language + lv)
+                    .findFirst();
+            if (scoreObject == null || scoreObject.getScore() < score) {
+                scoreObject = new ScoreObject(language + lv, score);
+                RealmController.with(this).addScore(scoreObject);
+                int lanScore = RealmController.with(this).getLanScore(language);
+                String which;
+                switch (language) {
+                    case "en":
+                        which = getString(R.string.leaderboard_english_score);
+                        break;
+                    case "hi":
+                        which = getString(R.string.leaderboard_hindi_score);
+                        break;
+                    case "te":
+                        which = getString(R.string.leaderboard_telugu_score);
+                        break;
+                    case "ta":
+                        which = getString(R.string.leaderboard_tamil_score);
+                        break;
+                    case "ml":
+                        which = getString(R.string.leaderboard_malayalam_score);
+                        break;
+                    case "kn":
+                        which = getString(R.string.leaderboard_kannada_score);
+                        break;
+                    default:
+                        which = getString(R.string.leaderboard_english_score);
+                }
+                Games.Leaderboards.submitScore(apiClient,
+                        which,
+                        lanScore);
+            }
+            startActivity(new Intent(getApplicationContext(), FinishActivity.class)
+                    .putExtra("score", score)
+                    .putExtra("lan", language)
+                    .putExtra("lv", lv));
+            score = 0;
+            nQ = 0;
+            m_details.clear();
             finish();
         }
     }

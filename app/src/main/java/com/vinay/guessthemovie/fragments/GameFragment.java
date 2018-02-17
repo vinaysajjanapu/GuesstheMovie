@@ -20,13 +20,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.vinay.guessthemovie.R;
 import com.vinay.guessthemovie.activities.HintActivity;
 import com.vinay.guessthemovie.activities.MainActivity;
 import com.vinay.guessthemovie.utils.MovieDb;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 @SuppressLint("ValidFragment")
 public class GameFragment extends Fragment implements View.OnClickListener {
@@ -95,12 +92,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         if (movie.getPoster_path() != null)
             Glide.with(getActivity())
                     .load("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path())
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25)))
                     .into(backgroundImage);
         else
             Glide.with(getActivity())
                     .load("http://image.tmdb.org/t/p/w185/" + movie.getBackdrop_path())
-                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25)))
                     .into(backgroundImage);
 
         livesHolder = view.findViewById(R.id.lives_holder);
@@ -116,7 +111,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         tv_Score.setText(MainActivity.score + " / " + MainActivity.nQ);
 
         button_hint.setOnClickListener(v -> {
-            getActivity().startActivity(new Intent(getActivity(), HintActivity.class).putExtra("hint", movie.getOverview()));
+            getActivity().startActivity(new Intent(getActivity(), HintActivity.class)
+                    .putExtra("hint", movie.getOverview().toUpperCase().replaceAll(moviename.toUpperCase(), "XXXXXX ")));
         });
     }
 
@@ -250,7 +246,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     private void Finalize(Boolean win) {
         if (win) {
             //nextLevel.setTextColor(Color.BLACK);
-            nextLevel.setColorFilter(Color.rgb(50, 0, 255));
+            nextLevel.setColorFilter(Color.GREEN);
 
         } else {
             // nextLevel.setTextColor(Color.WHITE);
@@ -258,9 +254,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             Answer_Preview();
 
         }
-        Glide.with(getActivity())
-                .load("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path())
-                .into(backgroundImage);
+        backgroundImage.setAlpha(1.0f);
+        backgroundImage.clearColorFilter();
         nextLevel.setVisibility(View.VISIBLE);
     }
 
@@ -278,12 +273,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         MainActivity.nQ += 1;
         tv_Score.setText(MainActivity.score + " / " + MainActivity.nQ);
     }
-
-    /*public void showLeaderboard() {
-        startActivityForResult(
-                Games.Leaderboards.getLeaderboardIntent(apiClient,
-                        getString(R.string.leaderboard_telugu_score)), 0);
-    }*/
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

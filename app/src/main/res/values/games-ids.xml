@@ -1,9 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
-    Google Play game services IDs.
-    Save this file as res/values/games-ids.xml in your project.
-    -->
+<?xml version="1.0" encoding="utf-8"?><!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
 <resources>
     <!-- app_id -->
     <string name="app_id" translatable="false">234945601769</string>
@@ -11,9 +9,16 @@
     <string name="package_name" translatable="false">com.vinay.guessthemovie</string>
     <!-- achievement Score a perfect -->
     <string name="achievement_score_a_perfect" translatable="false">CgkI6cHlnusGEAIQAQ</string>
+    <!-- leaderboard English Score -->
+    <string name="leaderboard_english_score" translatable="false">CgkI6cHlnusGEAIQBA</string>
+    <!-- leaderboard Hindi Score -->
+    <string name="leaderboard_hindi_score" translatable="false">CgkI6cHlnusGEAIQBQ</string>
     <!-- leaderboard Telugu Score -->
     <string name="leaderboard_telugu_score" translatable="false">CgkI6cHlnusGEAIQAg</string>
-    <!-- event Started Playing -->
-    <string name="event_started_playing" translatable="false">CgkI6cHlnusGEAIQAA</string>
-
+    <!-- leaderboard Tamil Score -->
+    <string name="leaderboard_tamil_score" translatable="false">CgkI6cHlnusGEAIQBg</string>
+    <!-- leaderboard Malayalam Score -->
+    <string name="leaderboard_malayalam_score" translatable="false">CgkI6cHlnusGEAIQBw</string>
+    <!-- leaderboard Kannada Score -->
+    <string name="leaderboard_kannada_score" translatable="false">CgkI6cHlnusGEAIQCA</string>
 </resources>
