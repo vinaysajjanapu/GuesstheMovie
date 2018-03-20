@@ -3,9 +3,13 @@ package com.vinay.guessthemovie.fragments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -20,9 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.vinay.guessthemovie.R;
 import com.vinay.guessthemovie.activities.HintActivity;
 import com.vinay.guessthemovie.activities.MainActivity;
+import com.vinay.guessthemovie.utils.BlurBuilder;
 import com.vinay.guessthemovie.utils.MovieDb;
 
 @SuppressLint("ValidFragment")
@@ -44,6 +51,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     int screenWidth, screenHeight;
     ImageView backgroundImage;
     MovieDb.ResultsBean movie;
+    Vibrator vibe;
+    Bitmap bitmap;
 
     public GameFragment() {
     }
@@ -59,6 +68,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+        vibe = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         Initialize(view);
         CreateHolder(view);
         CreateLivesIndic();
@@ -90,13 +100,27 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         backgroundImage = view.findViewById(R.id.iv_poster);
         if (movie.getPoster_path() != null)
-            Glide.with(getActivity())
+            Glide.with(this)
+                    .asBitmap()
                     .load("http://image.tmdb.org/t/p/w185/" + movie.getPoster_path())
-                    .into(backgroundImage);
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            bitmap = resource;
+                            backgroundImage.setImageBitmap(BlurBuilder.getInstance().blur_bitmap(getContext(), resource));
+                        }
+                    });
         else
-            Glide.with(getActivity())
+            Glide.with(this)
+                    .asBitmap()
                     .load("http://image.tmdb.org/t/p/w185/" + movie.getBackdrop_path())
-                    .into(backgroundImage);
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            bitmap = resource;
+                            backgroundImage.setImageBitmap(BlurBuilder.getInstance().blur_bitmap(getContext(), resource));
+                        }
+                    });
 
         livesHolder = view.findViewById(R.id.lives_holder);
         life = new ImageView[5];
@@ -210,6 +234,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         } else if ((life_available == 0) || (finish == moviename.length())) {
             //no action on keyboard
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibe.vibrate(VibrationEffect.createOneShot(50, 5));
+            } else {
+                vibe.vibrate(50);
+            }
             Button key = (Button) view;
             Boolean b = false;
             for (int v = 0; v < moviename.length(); v++) {
@@ -254,7 +283,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             Answer_Preview();
 
         }
-        backgroundImage.setAlpha(1.0f);
+        backgroundImage.setImageBitmap(bitmap);
         backgroundImage.clearColorFilter();
         nextLevel.setVisibility(View.VISIBLE);
     }

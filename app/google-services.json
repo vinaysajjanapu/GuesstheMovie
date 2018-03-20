@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "234945601769-jau12j9glnlj1rc7v3277cj6j8qv224r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vinay.guessthemovie",
+            "certificate_hash": "7d4c46c66f8e55922c05ce7d59bd513b375a88eb"
+          }
+        },
+        {
           "client_id": "234945601769-en6232vcakhkqeltvcjebaudnrflk3r7.apps.googleusercontent.com",
           "client_type": 3
         },

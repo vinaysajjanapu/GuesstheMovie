@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MyApplication"
@@ -36,7 +37,9 @@
         <activity android:name=".activities.OptionsActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.FinishActivity" />
-        <activity android:name=".activities.HintActivity" android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity
+            android:name=".activities.HintActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
     </application>
 
 </manifest>

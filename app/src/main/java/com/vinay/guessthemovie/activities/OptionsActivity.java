@@ -1,9 +1,13 @@
 package com.vinay.guessthemovie.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +31,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     DBHelper db;
     Button btn_telugu, btn_eng, btn_hin;
     ProgressDialog pd;
-
+    Vibrator vibe;
     SharedPreferences score;
 
     @Override
@@ -36,7 +40,7 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_options);
 
         score = getSharedPreferences("score", MODE_PRIVATE);
-
+        vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         SharedPreferences.Editor e = score.edit();
         e.putInt("score", 0);
         e.putInt("nQ", 0);
@@ -100,6 +104,11 @@ public class OptionsActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibe.vibrate(VibrationEffect.createOneShot(50, 5));
+        } else {
+            vibe.vibrate(50);
+        }
         switch (v.getId()) {
             case R.id.btn_English:
                 submitdatatoserver("en");

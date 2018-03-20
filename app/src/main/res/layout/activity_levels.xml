@@ -11,7 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/adView"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        tools:listitem="@layout/item_level"
+        ads:layoutManager="android.support.v7.widget.GridLayoutManager"
+        ads:spanCount="3"/>
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
